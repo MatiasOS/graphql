@@ -42,7 +42,7 @@ const Author = db.models.author;
 const Post = db.models.post;
 
 // somewhere in the middle:
-const mongo = Mongoose.connect('mongodb://localhost/views');
+const mongo = Mongoose.connect('mongodb://mongo/views');
 
 const ViewSchema = Mongoose.Schema({
   postId: Number,
