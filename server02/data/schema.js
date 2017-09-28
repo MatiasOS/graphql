@@ -1,26 +1,38 @@
-import { makeExecutableSchema } from 'graphql-tools';
-import resolvers from './resolvers'
+// schema.js
+import {
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLInt
+} from 'graphql';
 
-const typeDefs = `
-type Author {
-  id: Int
-  firstName: String
-  lastName: String
-  posts: [Post]
-}
-type Post {
-  id: Int
-  title: String
-  text: String
-  views: Int
-  author: Author
-}
-type Query {
-  author(firstName: String, lastName: String): Author
-  getFortuneCookie: String
-}
-`;
+let count = 0;
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+let schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
+    name: 'RootQueryType',
+    fields: {
+      count: {
+        type: GraphQLInt,
+        description: 'The count!',
+        resolve: function() {
+          return count;
+        }
+      }
+    }
+  }),
+  mutation: new GraphQLObjectType({
+    name: 'RootMutationType',
+    fields: {
+      updateCount: {
+        type: GraphQLInt,
+        description: 'Updates the count',
+        resolve: function() {
+          count += 1;
+          return count;
+        }
+      }
+    }
+  })
+});
 
 export default schema;

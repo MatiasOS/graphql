@@ -3,6 +3,7 @@ import resolvers from './resolvers'
 
 const typeDefs = `
 type Author {
+  # Auth0r of the movie.
   id: Int
   firstName: String
   lastName: String
