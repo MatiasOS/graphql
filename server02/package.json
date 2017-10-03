@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server.js --exec babel-node",
+    "start": "node ./build/server.js",
+    "build": "rm -rf ./build && mkdir build && ./node_modules/.bin/babel ./src -s -D -d build/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
@@ -43,7 +44,7 @@
     "eslint-config-airbnb": "^6.1.0",
     "eslint-plugin-import": "^1.1.0",
     "eslint-plugin-react": "^4.2.3",
-    "graphql": "^0.10.5",
+    "graphql": "^0.10.0",
     "nodemon": "^1.9.1"
   },
   "peerDependencies": {

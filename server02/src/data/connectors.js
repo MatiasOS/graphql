@@ -23,7 +23,7 @@ AuthorModel.hasMany(PostModel);
 PostModel.belongsTo(AuthorModel);
 
 // create mock data with a seed, so we always get the same
-casual.seed(1234);
+casual.seed(123);
 db.sync({ force: true }).then(() => {
   _.times(10, () => {
     return AuthorModel.create({
@@ -42,7 +42,7 @@ const Author = db.models.author;
 const Post = db.models.post;
 
 // somewhere in the middle:
-const mongo = Mongoose.connect('mongodb://localhost/views');
+const mongo = Mongoose.connect('mongodb://mongo/views');
 
 const ViewSchema = Mongoose.Schema({
   postId: Number,
@@ -51,7 +51,7 @@ const ViewSchema = Mongoose.Schema({
 
 const View = Mongoose.model('views', ViewSchema);
 
-casual.seed(1234);
+casual.seed(123);
 db.sync({ force: true }).then(() => {
   _.times(10, () => {
     return AuthorModel.create({
