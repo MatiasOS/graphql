@@ -1,7 +1,7 @@
  version: "3"
  services:
    server01:
-     image: matias/server01:0.0.1
+     image: matiasos/server01:0.0.1
      deploy:
        replicas: 1
        resources:
@@ -15,7 +15,7 @@
      networks:
        - webnet
    server02:
-     image: matias/server02:0.0.1
+     image: matiasos/server02:0.0.1
      deploy:
        replicas: 1
        resources:
@@ -25,7 +25,7 @@
        restart_policy:
          condition: on-failure
      ports:
-       - "3001:3001"
+       - "3001:3000"
      networks:
        - webnet
    mongo:
