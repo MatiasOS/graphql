@@ -8,7 +8,7 @@ var resolvers = {
     hello: function hello(__, _ref) {
       var what = _ref.what;
 
-      console.dir(what);
+      console.log(arguments);
       return what;
     }
   }

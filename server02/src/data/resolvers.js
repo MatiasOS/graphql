@@ -1,7 +1,7 @@
 const resolvers = {
   Query: {
     hello(__, {what}){
-      console.dir(what)
+      console.log(arguments)
       return what
     }
   }

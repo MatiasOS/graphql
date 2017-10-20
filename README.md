@@ -18,6 +18,8 @@ To run the stack:
 ```bash
 $ docker deploy -c docker-compose.yml g
 ```
+Must be running at `http://localhost:3000/graphiql`
+
 To see docker services use:
 ```bash
 $ docker service ls 

@@ -1,28 +1,24 @@
-import { Author, View, FortuneCookie } from './connectors';
+import { createApolloFetch } from 'apollo-fetch'
+
+const uri = 'http://127.0.0.1:3001/graphql'
+const apolloFetch = createApolloFetch({uri})
 
 const resolvers = {
   Query: {
-    author(_, args) {
-      return Author.find({ where: args });
-    },
-    getFortuneCookie() {
-      return FortuneCookie.getOne();
-    }
-  },
-  Author: {
-    posts(author) {
-      return author.getPosts();
-    },
-  },
-  Post: {
-    author(post) {
-      return post.getAuthor();
-    },
-    views(post) {
-      return View.findOne({ postId: post.id })
-        .then((view) => view.views);
-    },
-  },
-};
+    hello(__, {what}) {
+      return apolloFetch({query: `{hello(what: "${what}")}`})
+        .then(result => {
+          const {data, errors, extensions} = result
+          console.dir(result)
+          return `${data.hello}!`
+        })
+        .catch(error => {
 
-export default resolvers;
+          console.log('err')
+          console.dir(error)
+        })
+    }
+  }
+}
+
+export default resolvers

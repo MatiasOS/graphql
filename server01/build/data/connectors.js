@@ -65,7 +65,7 @@ var Author = db.models.author;
 var Post = db.models.post;
 
 // somewhere in the middle:
-var mongo = _mongoose2.default.connect('mongodb://mongo/views');
+var mongo = _mongoose2.default.connect('mongodb://127.0.0.1:27017/views');
 
 var ViewSchema = _mongoose2.default.Schema({
   postId: Number,
