@@ -3,60 +3,41 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.schema = undefined;
 
-var _apolloLinkHttp = require('apollo-link-http');
+var _apolloFetch = require('apollo-fetch');
+
+var _graphqlTools = require('graphql-tools');
 
 var _nodeFetch = require('node-fetch');
 
 var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 
-var _graphqlTools = require('graphql-tools');
+var _apolloLinkHttp = require('apollo-link-http');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 async function makeMergedSchema() {
-
-  console.log('.');
-  const linkHello = new _apolloLinkHttp.HttpLink({ uri: 'http://localhost:3003/graphql', fetch: _nodeFetch2.default });
-  console.log('.');
-  const schemaHello = await (0, _graphqlTools.introspectSchema)(linkHello);
-  console.log('.');
-  const linkPerson = new _apolloLinkHttp.HttpLink({ uri: 'http://localhost:3000/graphql', fetch: _nodeFetch2.default });
-  const schemaPerson = await (0, _graphqlTools.introspectSchema)(linkPerson);
-  console.log('.');
-
-  const LinkSchema = `
-    extend type Person {
-      hello: String
-    }
-    `;
-
-  const executableHello = (0, _graphqlTools.makeRemoteExecutableSchema)({
+  const logger = { log: e => console.log(e) };
+  const fetcherHello = (0, _apolloFetch.createApolloFetch)({ uri: 'http://127.0.0.1:3001/graphql' });
+  const schemaHello = await (0, _graphqlTools.introspectSchema)(fetcherHello);
+  const ExceutableSchemaHello = await (0, _graphqlTools.makeRemoteExecutableSchema)({
     schema: schemaHello,
-    link: linkHello
+    fetcher: fetcherHello,
+    logger
   });
 
-  const executablePerson = (0, _graphqlTools.makeRemoteExecutableSchema)({
+  const fetcherPerson = (0, _apolloFetch.createApolloFetch)({ uri: 'http://127.0.0.1:3003/graphql' });
+  const schemaPerson = await (0, _graphqlTools.introspectSchema)(fetcherPerson);
+  const ExceutableSchemaPerson = await (0, _graphqlTools.makeRemoteExecutableSchema)({
     schema: schemaPerson,
-    link: linkPerson
+    fetcher: fetcherPerson,
+    logger
   });
 
   return (0, _graphqlTools.mergeSchemas)({
-    schemas: [executableHello, executablePerson, LinkSchema],
-    resolvers: mergeInfo => ({
-      Person: {
-        hello: {
-          resolve(parent, args, context, info) {
-            return mergeInfo.delegate('query', 'hello', {
-              what: args.what
-            }, context, info);
-          }
-        }
-      }
-    })
+    schemas: [ExceutableSchemaHello, ExceutableSchemaPerson]
   });
 }
 
-const schema = exports.schema = makeMergedSchema();
+exports.default = makeMergedSchema();
 //# sourceMappingURL=schema.js.map

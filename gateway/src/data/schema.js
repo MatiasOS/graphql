@@ -1,55 +1,29 @@
-import { HttpLink, createHttpLink } from 'apollo-link-http'
-import fetch from 'node-fetch'
+import { createApolloFetch } from 'apollo-fetch'
 import { introspectSchema, makeRemoteExecutableSchema, mergeSchemas } from 'graphql-tools'
+import fetch from 'node-fetch'
+import { HttpLink } from 'apollo-link-http'
 
 async function makeMergedSchema () {
-
-
-  console.log('.')
-  const linkHello = new HttpLink({uri: 'http://localhost:3003/graphql', fetch})
-  console.log('.')
-  const schemaHello = await introspectSchema(linkHello)
-  console.log('.')
-  const linkPerson = new HttpLink({uri: 'http://localhost:3000/graphql', fetch})
-  const schemaPerson = await introspectSchema(linkPerson)
-  console.log('.')
-
-  const LinkSchema = `
-    extend type Person {
-      hello: String
-    }
-    `
-
-  const executableHello = makeRemoteExecutableSchema({
+  const logger = {log: (e) => console.log(e)}
+  const fetcherHello = createApolloFetch({uri: 'http://127.0.0.1:3001/graphql'})
+  const schemaHello = await introspectSchema(fetcherHello)
+  const ExceutableSchemaHello = await makeRemoteExecutableSchema({
     schema: schemaHello,
-    link: linkHello,
+    fetcher: fetcherHello,
+    logger
   })
 
-  const executablePerson = makeRemoteExecutableSchema({
+  const fetcherPerson = createApolloFetch({uri: 'http://127.0.0.1:3003/graphql'})
+  const schemaPerson = await introspectSchema(fetcherPerson)
+  const ExceutableSchemaPerson = await makeRemoteExecutableSchema({
     schema: schemaPerson,
-    link: linkPerson,
+    fetcher: fetcherPerson,
+    logger
   })
 
   return mergeSchemas({
-    schemas: [executableHello, executablePerson, LinkSchema],
-    resolvers: mergeInfo => ({
-      Person: {
-        hello: {
-          resolve(parent, args, context, info) {
-            return mergeInfo.delegate(
-              'query',
-              'hello',
-              {
-                what: args.what,
-              },
-              context,
-              info,
-            )
-          }
-        }
-      }
-    })
+    schemas: [ExceutableSchemaHello, ExceutableSchemaPerson]
   })
 }
 
-export const schema = makeMergedSchema()
+export default makeMergedSchema()
