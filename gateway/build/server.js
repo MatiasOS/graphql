@@ -14,7 +14,7 @@ var _schema = require('./data/schema');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const GRAPHQL_PORT = 3004;
+const GRAPHQL_PORT = 3000;
 
 const graphQLServer = (0, _express2.default)();
 

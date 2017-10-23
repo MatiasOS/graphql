@@ -18,7 +18,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 async function makeMergedSchema() {
 
   console.log('.');
-  const linkHello = (0, _apolloLinkHttp.createHttpLink)({ uri: 'http://localhost:3003/graphql', fetch: _nodeFetch2.default });
+  const linkHello = new _apolloLinkHttp.HttpLink({ uri: 'http://localhost:3003/graphql', fetch: _nodeFetch2.default });
+  console.log('.');
   const schemaHello = await (0, _graphqlTools.introspectSchema)(linkHello);
   console.log('.');
   const linkPerson = new _apolloLinkHttp.HttpLink({ uri: 'http://localhost:3000/graphql', fetch: _nodeFetch2.default });

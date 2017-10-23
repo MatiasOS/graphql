@@ -6,7 +6,8 @@ async function makeMergedSchema () {
 
 
   console.log('.')
-  const linkHello = createHttpLink({uri: 'http://localhost:3003/graphql', fetch})
+  const linkHello = new HttpLink({uri: 'http://localhost:3003/graphql', fetch})
+  console.log('.')
   const schemaHello = await introspectSchema(linkHello)
   console.log('.')
   const linkPerson = new HttpLink({uri: 'http://localhost:3000/graphql', fetch})
