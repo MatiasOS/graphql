@@ -9,7 +9,7 @@ var resolvers = {
       var what = _ref.what;
 
       console.log(arguments);
-      return what;
+      return what + " :)";
     }
   }
 };

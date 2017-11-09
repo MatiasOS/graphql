@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _apolloFetch = require('apollo-fetch');
 
-var uri = 'http://server02:3001/graphql';
+var uri = 'http://127.0.0.1:3002/graphql';
 var apolloFetch = (0, _apolloFetch.createApolloFetch)({ uri: uri });
 
 var resolvers = {

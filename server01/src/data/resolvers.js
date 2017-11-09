@@ -1,6 +1,6 @@
 import { createApolloFetch } from 'apollo-fetch'
 
-const uri = 'http://server02:3001/graphql'
+const uri = 'http://127.0.0.1:3002/graphql'
 const apolloFetch = createApolloFetch({uri})
 
 const resolvers = {

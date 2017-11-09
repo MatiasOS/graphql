@@ -1,0 +1,19 @@
+//{
+//  "passPerPreset": true,
+//  "presets": [
+//    "react",
+//    "es2015",
+//    "stage-0"
+//  ],
+//  "plugins": [
+//  ]
+//}
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 Chrome versions"]
+      }
+    }]
+  ]
+}
