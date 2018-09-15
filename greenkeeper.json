@@ -1,0 +1,12 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "gateway/package.json",
+        "server01/package.json",
+        "server02/package.json",
+        "server03/package.json"
+      ]
+    }
+  }
+}
